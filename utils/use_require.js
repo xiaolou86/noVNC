@@ -44,8 +44,8 @@ no_copy_files.forEach((file) => no_transform_files.add(file));
 // util.promisify requires Node.js 8.x, so we have our own
 function promisify(original) {
     return function () {
-        let obj = this;
-        let args = Array.prototype.slice.call(arguments);
+        var obj = this;
+        var args = Array.prototype.slice.call(arguments);
         return new Promise((resolve, reject) => {
             original.apply(obj, args.concat((err, value) => {
                 if (err) return reject(err);
@@ -73,7 +73,7 @@ const babelTransformFile = promisify(babel.transformFile);
 var walkDir = function (base_path, cb, filter) {
     return readdir(base_path)
     .then(files => {
-        let paths = files.map(filename => path.join(base_path, filename));
+        var paths = files.map(filename => path.join(base_path, filename));
         return Promise.all(paths.map((filepath) => {
             return lstat(filepath)
             .then(stats => {
@@ -104,7 +104,7 @@ var transform_html = function (legacy_scripts, only_legacy) {
 
         if (only_legacy) {
             // Only legacy version, so include things directly
-            for (let i = 0;i < legacy_scripts.length;i++) {
+            for (var i = 0;i < legacy_scripts.length;i++) {
                 new_script += `    <script src="${legacy_scripts[i]}"></script>\n`;
             }
         } else {
@@ -117,9 +117,9 @@ var transform_html = function (legacy_scripts, only_legacy) {
     <script>\n\
         window.addEventListener("load", function() {\n\
             if (window._noVNC_has_module_support) return;\n\
-            let legacy_scripts = ${JSON.stringify(legacy_scripts)};\n\
-            for (let i = 0;i < legacy_scripts.length;i++) {\n\
-                let script = document.createElement("script");\n\
+            var legacy_scripts = ${JSON.stringify(legacy_scripts)};\n\
+            for (var i = 0;i < legacy_scripts.length;i++) {\n\
+                var script = document.createElement("script");\n\
                 script.src = legacy_scripts[i];\n\
                 script.async = false;\n\
                 document.head.appendChild(script);\n\
@@ -247,19 +247,19 @@ var make_lib_files = function (import_format, source_maps, with_app_dir, only_le
 
     Promise.resolve()
     .then(() => {
-        let handler = handleDir.bind(null, true, false, in_path || paths.main);
-        let filter = (filename, stats) => !no_copy_files.has(filename);
+        var handler = handleDir.bind(null, true, false, in_path || paths.main);
+        var filter = (filename, stats) => !no_copy_files.has(filename);
         return walkDir(paths.vendor, handler, filter);
     })
     .then(() => {
-        let handler = handleDir.bind(null, true, !in_path, in_path || paths.core);
-        let filter = (filename, stats) => !no_copy_files.has(filename);
+        var handler = handleDir.bind(null, true, !in_path, in_path || paths.core);
+        var filter = (filename, stats) => !no_copy_files.has(filename);
         return walkDir(paths.core, handler, filter);
     })
     .then(() => {
         if (!with_app_dir) return;
-        let handler = handleDir.bind(null, false, false, in_path);
-        let filter = (filename, stats) => !no_copy_files.has(filename);
+        var handler = handleDir.bind(null, false, false, in_path);
+        var filter = (filename, stats) => !no_copy_files.has(filename);
         return walkDir(paths.app, handler, filter);
     })
     .then(() => {
@@ -273,8 +273,8 @@ var make_lib_files = function (import_format, source_maps, with_app_dir, only_le
         console.log(`Writing ${out_app_path}`);
         return helper.appWriter(out_path_base, legacy_path_base, out_app_path)
         .then(extra_scripts => {
-            let rel_app_path = path.relative(out_path_base, out_app_path);
-            let legacy_scripts = extra_scripts.concat([rel_app_path]);
+            var rel_app_path = path.relative(out_path_base, out_app_path);
+            var legacy_scripts = extra_scripts.concat([rel_app_path]);
             transform_html(legacy_scripts, only_legacy);
         })
         .then(() => {
@@ -285,7 +285,7 @@ var make_lib_files = function (import_format, source_maps, with_app_dir, only_le
                 .then(() => {
                     // Try to clean up any empty directories if this
                     // was the last file in there
-                    let rmdir_r = dir => {
+                    var rmdir_r = dir => {
                         return rmdir(dir)
                         .then(() => rmdir_r(path.dirname(dir)))
                         .catch(() => {

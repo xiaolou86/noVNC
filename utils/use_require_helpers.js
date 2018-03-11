@@ -6,8 +6,8 @@ var path = require('path');
 // util.promisify requires Node.js 8.x, so we have our own
 function promisify(original) {
     return function () {
-        let obj = this;
-        let args = Array.prototype.slice.call(arguments);
+        var obj = this;
+        var args = Array.prototype.slice.call(arguments);
         return new Promise((resolve, reject) => {
             original.apply(obj, args.concat((err, value) => {
                 if (err) return reject(err);
@@ -23,12 +23,12 @@ module.exports = {
     'amd': {
         appWriter: (base_out_path, script_base_path, out_path) => {
             // setup for requirejs
-            let ui_path = path.relative(base_out_path,
+            var ui_path = path.relative(base_out_path,
                                         path.join(script_base_path, 'app', 'ui'));
             return writeFile(out_path, `requirejs(["${ui_path}"], function (ui) {});`)
             .then(() => {
                 console.log(`Please place RequireJS in ${path.join(script_base_path, 'require.js')}`);
-                let require_path = path.relative(base_out_path,
+                var require_path = path.relative(base_out_path,
                                                  path.join(script_base_path, 'require.js'))
                 return [ require_path ];
             });
@@ -52,15 +52,15 @@ module.exports = {
     },
     'systemjs': {
         appWriter: (base_out_path, script_base_path, out_path) => {
-            let ui_path = path.relative(base_out_path,
+            var ui_path = path.relative(base_out_path,
                                         path.join(script_base_path, 'app', 'ui.js'));
             return writeFile(out_path, `SystemJS.import("${ui_path}");`)
             .then(() => {
                 console.log(`Please place SystemJS in ${path.join(script_base_path, 'system-production.js')}`);
                 // FIXME: Should probably be in the legacy directory
-                let promise_path = path.relative(base_out_path,
+                var promise_path = path.relative(base_out_path,
                                                  path.join(base_out_path, 'vendor', 'promise.js'))
-                let systemjs_path = path.relative(base_out_path,
+                var systemjs_path = path.relative(base_out_path,
                                                   path.join(script_base_path, 'system-production.js'))
                 return [ promise_path, systemjs_path ];
             });

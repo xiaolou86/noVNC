@@ -346,12 +346,12 @@ describe('Display/Canvas Helper', function () {
 
         // We have a special cache for 16x16 tiles that we need to test
         it('should support drawing a 16x16 tile', function () {
-            let large_checked_data = new Uint8Array(16*16*4);
+            var large_checked_data = new Uint8Array(16*16*4);
             display.resize(16, 16);
 
-            for (let y = 0;y < 16;y++) {
-                for (let x = 0;x < 16;x++) {
-                    let pixel;
+            for (var y = 0;y < 16;y++) {
+                for (var x = 0;x < 16;x++) {
+                    var pixel;
                     if ((x < 4) && (y < 4)) {
                         // NB: of course IE11 doesn't support #slice on ArrayBufferViews...
                         pixel = Array.prototype.slice.call(checked_data, (y*4+x)*4, (y*4+x+1)*4);

@@ -384,7 +384,7 @@ var UI = {
         document.documentElement.classList.remove("noVNC_disconnecting");
         document.documentElement.classList.remove("noVNC_reconnecting");
 
-        let transition_elem = document.getElementById("noVNC_transition_text");
+        var transition_elem = document.getElementById("noVNC_transition_text");
         switch (state) {
             case 'init':
                 break;
@@ -455,7 +455,7 @@ var UI = {
 
         // Don't overwrite more severe visible statuses and never
         // errors. Only shows the first error.
-        let visible_status_type = 'none';
+        var visible_status_type = 'none';
         if (statusElem.classList.contains("noVNC_open")) {
             if (statusElem.classList.contains("noVNC_status_error")) {
                 visible_status_type = 'error';
@@ -1076,7 +1076,7 @@ var UI = {
         UI.connected = true;
         UI.inhibit_reconnect = false;
 
-        let msg;
+        var msg;
         if (UI.getSetting('encrypt')) {
             msg = _("Connected (encrypted) to ") + UI.desktopName;
         } else {
@@ -1090,7 +1090,7 @@ var UI = {
     },
 
     disconnectFinished: function (e) {
-        let wasConnected = UI.connected;
+        var wasConnected = UI.connected;
 
         // This variable is ideally set when disconnection starts, but
         // when the disconnection isn't clean or if it is initiated by
@@ -1124,7 +1124,7 @@ var UI = {
     },
 
     securityFailed: function (e) {
-        let msg = "";
+        var msg = "";
         // On security failures we might get a string with a reason
         // directly from the server. Note that we can't control if
         // this string is translated or not.

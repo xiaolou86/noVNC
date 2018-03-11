@@ -51,8 +51,8 @@ export default function RecordingPlayer (frames, encoding, disconnected) {
     this._disconnected = disconnected;
 
     if (this._encoding === undefined) {
-        let frame = this._frames[0];
-        let start = frame.indexOf('{', 1) + 1;
+        var frame = this._frames[0];
+        var start = frame.indexOf('{', 1) + 1;
         if (frame.slice(start).startsWith('UkZC')) {
             this._encoding = 'base64';
         } else {
@@ -129,9 +129,9 @@ RecordingPlayer.prototype = {
         }
 
         if (this._realtime) {
-            let foffset = frame.slice(1, frame.indexOf('{', 1));
-            let toffset = (new Date()).getTime() - this._start_time;
-            let delay = foffset - toffset;
+            var foffset = frame.slice(1, frame.indexOf('{', 1));
+            var toffset = (new Date()).getTime() - this._start_time;
+            var delay = foffset - toffset;
             if (delay < 1) delay = 1;
 
             setTimeout(this._doPacket.bind(this), delay);
@@ -143,8 +143,8 @@ RecordingPlayer.prototype = {
     _doPacket: function () {
         // Avoid having excessive queue buildup in non-realtime mode
         if (this._trafficManagement && this._rfb._flushing) {
-            let player = this;
-            let orig = this._rfb._display.onflush;
+            var player = this;
+            var orig = this._rfb._display.onflush;
             this._rfb._display.onflush = function () {
                 player._rfb._display.onflush = orig;
                 player._rfb._onFlush();
@@ -160,7 +160,7 @@ RecordingPlayer.prototype = {
             start = 0;
         } else {
             var u8 = new Uint8Array(frame.length - start);
-            for (let i = 0; i < frame.length - start; i++) {
+            for (var i = 0; i < frame.length - start; i++) {
                 u8[i] = frame.charCodeAt(start + i);
             }
         }
