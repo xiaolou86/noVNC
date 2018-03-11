@@ -515,7 +515,7 @@ RFB.prototype = {
         if (new_clip) {
             // When clipping is enabled, the screen is limited to
             // the size of the container.
-            let size = this._screenSize();
+            var size = this._screenSize();
             this._display.viewportChangeSize(size.w, size.h);
             this._fixScrollbars();
         }
@@ -525,7 +525,7 @@ RFB.prototype = {
         if (!this._scaleViewport) {
             this._display.scale = 1.0;
         } else {
-            let size = this._screenSize();
+            var size = this._screenSize();
             this._display.autoscale(size.w, size.h);
         }
         this._fixScrollbars();
@@ -542,7 +542,7 @@ RFB.prototype = {
             return;
         }
 
-        let size = this._screenSize();
+        var size = this._screenSize();
         RFB.messages.setDesktopSize(this._sock, size.w, size.h,
                                     this._screen_id, this._screen_flags);
 
@@ -937,8 +937,8 @@ RFB.prototype = {
         if (this._sock.rQwait("reason length", 4)) {
             return false;
         }
-        let strlen = this._sock.rQshift32();
-        let reason = "";
+        var strlen = this._sock.rQshift32();
+        var reason = "";
 
         if (strlen > 0) {
             if (this._sock.rQwait("reason", strlen, 8)) { return false; }
@@ -947,7 +947,7 @@ RFB.prototype = {
 
         if (reason !== "") {
 
-            let event = new CustomEvent(
+            var event = new CustomEvent(
                 "securityfailure",
                 { detail: { status: security_result_status, reason: reason } });
             this.dispatchEvent(event);
@@ -956,7 +956,7 @@ RFB.prototype = {
                               " (reason: " + reason + ")");
         } else {
 
-            let event = new CustomEvent(
+            var event = new CustomEvent(
                 "securityfailure",
                 { detail: { status: security_result_status } });
             this.dispatchEvent(event);
@@ -1120,7 +1120,7 @@ RFB.prototype = {
     _handle_security_result: function () {
         if (this._sock.rQwait('VNC auth response ', 4)) { return false; }
 
-        let status = this._sock.rQshift32();
+        var status = this._sock.rQshift32();
 
         if (status === 0) { // OK
             this._rfb_init_state = 'ClientInitialisation';
@@ -1130,7 +1130,7 @@ RFB.prototype = {
             if (this._rfb_version >= 3.8) {
                 return this._handle_security_failure("security result", status);
             } else {
-                let event = new CustomEvent("securityfailure",
+                var event = new CustomEvent("securityfailure",
                                             { detail: { status: status } });
                 this.dispatchEvent(event);
 
@@ -1243,7 +1243,7 @@ RFB.prototype = {
 
         // Cursor will be server side until the server decides to honor
         // our request and send over the cursor image
-        this._display.disableLocalCursor();
+        //this._display.disableLocalCursor();
 
         this._updateConnectionState('connected');
         return true;
