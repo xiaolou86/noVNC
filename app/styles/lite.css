@@ -8,7 +8,7 @@
 
 body {
   margin:0;
-  background-color:#313131;
+  /*background-color:#313131;*/
   border-bottom-right-radius: 800px 600px;
   height:100%;
   display: flex;
@@ -16,7 +16,7 @@ body {
 }
 
 html {
-  background-color:#494949;
+  background-color:#000;
   height:100%;
 }
 

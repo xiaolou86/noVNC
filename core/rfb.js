@@ -152,7 +152,8 @@ export default function RFB(target, url, options) {
     this._screen.style.width = '100%';
     this._screen.style.height = '100%';
     this._screen.style.overflow = 'auto';
-    this._screen.style.backgroundColor = 'rgb(40, 40, 40)';
+    this._screen.style.backgroundColor = 'rgb(0, 0, 0, 0)';
+    //this._screen.style.backgroundColor = 'rgb(0, 0, 0)';
     this._canvas = document.createElement('canvas');
     this._canvas.style.margin = 'auto';
     // Some browsers add an outline on focus

@@ -103,6 +103,7 @@ var UI = {
         document.documentElement.classList.remove("noVNC_loading");
 
         var autoconnect = WebUtil.getConfigVar('autoconnect', false);
+
         if (autoconnect === 'true' || autoconnect == '1') {
             autoconnect = true;
             UI.connect();
@@ -115,6 +116,7 @@ var UI = {
         if (typeof callback === "function") {
             callback(UI.rfb);
         }
+        UI.connect();
     },
 
     initFullscreen: function() {
@@ -161,12 +163,12 @@ var UI = {
         UI.initSetting('port', port);
         UI.initSetting('encrypt', (window.location.protocol === "https:"));
         UI.initSetting('view_clip', false);
-        UI.initSetting('resize', 'off');
+        UI.initSetting('resize', 'scale');
         UI.initSetting('shared', true);
         UI.initSetting('view_only', false);
         UI.initSetting('path', 'websockify');
         UI.initSetting('repeaterID', '');
-        UI.initSetting('reconnect', false);
+        UI.initSetting('reconnect', true);
         UI.initSetting('reconnect_delay', 5000);
 
         UI.setupSettingLabels();
@@ -1033,6 +1035,7 @@ var UI = {
         UI.rfb.resizeSession = UI.getSetting('resize') === 'remote';
 
         UI.updateViewOnly(); // requires UI.rfb
+        //UI.connectFinished();
     },
 
     disconnect: function() {
@@ -1076,6 +1079,7 @@ var UI = {
         UI.connected = true;
         UI.inhibit_reconnect = false;
 
+        /*
         var msg;
         if (UI.getSetting('encrypt')) {
             msg = _("Connected (encrypted) to ") + UI.desktopName;
@@ -1083,6 +1087,7 @@ var UI = {
             msg = _("Connected (unencrypted) to ") + UI.desktopName;
         }
         UI.showStatus(msg);
+        */
         UI.updateVisualState('connected');
 
         // Do this last because it can only be used on rendered elements
